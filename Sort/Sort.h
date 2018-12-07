@@ -208,7 +208,11 @@ void Merge(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
 		tmp[index++] = tmp[begin1++];
 	while(begin2<=end2)
 		tmp[index++] = tmp[begin2++];
-	memcpy(a+start, tmp+start, sizeof(int)*len);
+	//memcpy(a+start, tmp+start, sizeof(int)*len);
+	for (int i = start; i < len; ++i)
+	{
+		tmp[i] = a[i];
+	}
 }
 void _MergeSort(int* a, int begin, int end, int* tmp)
 {
