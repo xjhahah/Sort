@@ -8,8 +8,7 @@ int main()
 	//SelectSort(arr, len);
 	//HeapSort(arr, len);
 	//BubbleSort(arr, len);
-
-
+	QuickSort(arr, 0, len - 1);
 	Print(arr, len);
 	return 0;
 }

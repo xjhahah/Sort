@@ -75,4 +75,66 @@ void BubbleSort(int* arr, int len)
 	}
 }
 
+// 快速排序
 
+//单趟排序
+int PartSort(int* arr, int begin,int end)
+{
+	int key = arr[end];
+	int keyindex = end;
+	while (begin < end)
+	{
+		//找大号
+		while (begin < end && arr[begin] < key)
+			++begin;
+		while (begin < end && arr[end] >= key)
+			--end;
+		Swap(&arr[begin], &arr[end]);
+	}
+	Swap(&arr[begin], &arr[keyindex]);
+	return begin;
+}
+//挖坑法
+int PartSort2(int* arr, int begin, int end)
+{
+	int key = arr[end];
+	while (begin < end)
+	{
+		while (begin < end && arr[begin] <= key)
+			++begin;
+		arr[end] = arr[begin];
+		while (begin < end && arr[end] >= key)
+			--end;
+		arr[begin] = arr[end];
+	}
+	arr[begin] = key;
+	return begin;
+}
+//前后指针法
+int PartSort3(int* arr, int begin, int end)
+{
+	int prev = begin - 1;
+	int cur = begin;
+	int key = arr[end];
+	while (cur < end)
+	{
+		if (arr[cur] < key && ++prev != cur)
+			Swap(&arr[cur], &arr[prev]);
+		++cur;
+	}
+	Swap(&arr[++prev], &arr[end]);
+	return prev;
+}
+
+void QuickSort(int* arr, int left,int right)
+{
+	assert(arr);
+	if (left >= right)
+		return;
+
+	int div = PartSort3(arr, left, right);
+
+	//[left,div-1]   div   [div+1,right]
+	QuickSort(arr, left, div - 1);
+	QuickSort(arr, div + 1,right);
+}
