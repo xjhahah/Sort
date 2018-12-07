@@ -1,6 +1,8 @@
 #pragma once
 #include <stdio.h>
 #include <assert.h>
+#include <malloc.h>
+#include <memory.h>
 
 
 
@@ -17,6 +19,29 @@ void Swap(int* left, int* right)
 	int temp = *left;
 	*left = *right;
 	*right = temp;
+}
+//≤Â»Î≈≈–Ú
+void InsertSort(int* arr, int n)
+{
+	assert(arr);
+	for (int i = 0; i < n-1; ++i)
+	{
+		int end = i;
+		int tmp = arr[end + 1];
+		while (end >= 0)
+		{
+			if (arr[end] > tmp)
+			{
+				arr[end + 1] = arr[end];
+				--end;
+			}
+			else
+			{
+				break;
+			}
+		}
+		arr[end] = tmp;
+	}
 }
 //—°‘Ò≈≈–Ú    O(N*N)
 void SelectSort(int* arr, int len)
@@ -78,7 +103,7 @@ void BubbleSort(int* arr, int len)
 // øÏÀŸ≈≈–Ú
 
 //µ•ÃÀ≈≈–Ú
-int PartSort(int* arr, int begin,int end)
+int PartSort1(int* arr, int begin,int end)
 {
 	int key = arr[end];
 	int keyindex = end;
@@ -137,4 +162,71 @@ void QuickSort(int* arr, int left,int right)
 	//[left,div-1]   div   [div+1,right]
 	QuickSort(arr, left, div - 1);
 	QuickSort(arr, div + 1,right);
+}
+void QuickSortOP(int* arr, int left, int right)
+{
+	if (left >= right)
+		return;
+	assert(arr);
+	if (right - left + 1 < 10)
+	{
+		InsertSort(arr + left, right - left + 1);
+	}
+	else
+	{
+		int div = PartSort3(arr, left, right);
+
+		//[left,div-1]   div   [div+1,right]
+		QuickSortOP(arr, left, div - 1);
+		QuickSortOP(arr, div + 1, right);
+	}
+}
+//void QuickSortNonR(int* arr, int left, int right)
+//{
+//	assert(arr);
+//
+//}
+
+//πÈ≤¢≈≈–Ú
+void Merge(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
+{
+	int start = begin1;
+	int len = end2 - begin1+1;
+	int index = begin1;
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (a[begin1] < a[end1])
+		{
+			tmp[index++] = tmp[begin1++];
+		}
+		else
+		{
+			tmp[index++] = tmp[begin2++];
+		}
+	}
+	while(begin1<=end1)
+		tmp[index++] = tmp[begin1++];
+	while(begin2<=end2)
+		tmp[index++] = tmp[begin2++];
+	memcpy(a+start, tmp+start, sizeof(int)*len);
+}
+void _MergeSort(int* a, int begin, int end, int* tmp)
+{
+	if (begin >= end)
+		return;
+	int mid = begin + ((end - begin) >> 1);
+
+	//[a,begin,mid,tmp]   [a,mid+1,end,tmp]
+	_MergeSort(a, begin, mid, tmp);
+	_MergeSort(a, mid + 1, end, tmp);
+
+	Merge(a, begin, mid, mid + 1, end, tmp);
+}
+void MergeSort(int* a, int n)
+{
+	assert(a);
+	int* tmp = (int*)malloc(sizeof(int)*n);
+
+	_MergeSort(a, 0, n - 1, tmp);
+	free(tmp);
 }
