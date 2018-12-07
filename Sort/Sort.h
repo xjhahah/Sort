@@ -57,8 +57,22 @@ void SelectSort(int* arr, int len)
 
 void BubbleSort(int* arr, int len)
 {
-	for (int i = 0; i < len; ++i)
+	assert(arr);
+	int end = len;
+	while(end--)
 	{
-		for()
+		int exchage = 0;
+		for (int i = 1; i <= end; ++i)
+		{
+			if (arr[i] < arr[i - 1])
+			{
+				Swap(&arr[i], &arr[i - 1]);
+				exchage = 1;
+			}
+		}
+		if (exchage == 0)
+			break;
 	}
 }
+
+
