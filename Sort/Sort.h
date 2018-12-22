@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <malloc.h>
 #include <memory.h>
-
+#include "Stack.h"
 
 
 void Print(int* arr,int len)
@@ -201,18 +201,43 @@ void QuickSortOP(int* arr, int left, int right)
 		QuickSortOP(arr, div + 1, right);
 	}
 }
-//void QuickSortNonR(int* arr, int left, int right)
-//{
-//	assert(arr);
-//
-//}
+//·ÇµÝ¹é
+void QuickSortNonR(int* a, int left, int right)
+{
+	assert(a);
+	Stack s;
+	StackInit(&s);
+
+	StackPush(&s, a[left]);
+	StackPush(&s, a[right]);
+
+	while (!StackEmpty(&s))
+	{
+		int end = StackTop(&s);
+		StackPop(&s);
+		int begin = StackTop(&s);
+		StackPop(&s);
+
+		int div = PartSort3(a, begin, end);
+		if (begin < div - 1)
+		{
+			StackPush(&s, begin);
+			StackPush(&s, div - 1);
+		}
+		if (div + 1 < end)
+		{
+			StackPush(&s, div + 1);
+			StackPush(&s, end);
+		}
+	}
+}
 
 
 //¹é²¢ÅÅÐò
 void Merge(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
 {
 	int start = begin1;
-	int len = end2 - begin1+1;
+	int len = end2 - begin1 + 1;
 	int index = begin1;
 	while (begin1 <= end1 && begin2 <= end2)
 	{
@@ -229,11 +254,11 @@ void Merge(int* a, int begin1, int end1, int begin2, int end2, int* tmp)
 		tmp[index++] = tmp[begin1++];
 	while(begin2<=end2)
 		tmp[index++] = tmp[begin2++];
-	//memcpy(a+start, tmp+start, sizeof(int)*len);
-	for (int i = start; i < len; ++i)
-	{
-		tmp[i] = a[i];
-	}
+	memcpy(a+start, tmp+start, sizeof(int)*len);
+	//for (int i = 0; i < len; ++i)
+	//{
+	//	tmp[i] = a[i];
+	//}
 }
 void _MergeSort(int* a, int begin, int end, int* tmp)
 {
@@ -247,6 +272,7 @@ void _MergeSort(int* a, int begin, int end, int* tmp)
 
 	Merge(a, begin, mid, mid + 1, end, tmp);
 }
+//È±ÏÝ£º Òª½èÖú¸¨Öú¿Õ¼ä
 void MergeSort(int* a, int n)
 {
 	assert(a);

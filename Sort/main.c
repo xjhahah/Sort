@@ -10,8 +10,9 @@ int main()
 	//HeapSort(arr, len);
 	//BubbleSort(arr, len);
 	//QuickSort(arr, 0, len - 1);
-	QuickSortOP(arr, 0, len - 1);
-	//MergeSort(arr, len);
+	//QuickSortOP(arr, 0, len - 1);
+	//QuickSortNonR(arr, 0, len - 1);
+	MergeSort(arr, len);
 	Print(arr, len);
 	return 0;
 }
