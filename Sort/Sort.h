@@ -21,26 +21,19 @@ void Swap(int* left, int* right)
 	*right = temp;
 }
 //插入排序
-void InsertSort(int* arr, int n)
+void InsertSort(int* a, int n)
 {
-	assert(arr);
-	for (int i = 0; i < n-1; ++i)
+	assert(a);
+	int i, j;
+	int temp;
+
+	for (i = 1; i < n; i++)               //执行n-1趟插入
 	{
-		int end = i;
-		int tmp = arr[end + 1];
-		while (end >= 0)
-		{
-			if (arr[end] > tmp)
-			{
-				arr[end + 1] = arr[end];
-				--end;
-			}
-			else
-			{
-				break;
-			}
-		}
-		arr[end] = tmp;
+		temp = a[i];                 //将要插入的数暂存到temp
+		j = i - 1;
+		while (j >= 0 && temp < a[j])   //找出temp的插入位置
+			a[j + 1] = a[j--];         //将a[j]后移，再将j减1
+		a[j + 1] = temp;               //将temp插入到指定位置
 	}
 }
 //选择排序    O(N*N)
@@ -102,7 +95,7 @@ void BubbleSort(int* arr, int len)
 
 // 快速排序
 
-//三数取中法
+//三数取中法，优化方法
 int GetMidIndex(int* a, int begin, int end)
 {
 	int mid = begin + ((end - begin) >> 1);
