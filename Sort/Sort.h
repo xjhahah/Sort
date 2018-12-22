@@ -102,6 +102,31 @@ void BubbleSort(int* arr, int len)
 
 // 快速排序
 
+//三数取中法
+int GetMidIndex(int* a, int begin, int end)
+{
+	int mid = begin + ((end - begin) >> 1);
+	//begin mid end
+	if (a[begin] < a[mid])
+	{
+		if (a[mid] < a[end])
+			return mid;
+		else if (a[begin] < a[end])
+			return end;
+		else
+			return begin;
+	}
+	else  //mid <= begin
+	{
+		if (a[end] < a[mid])
+			return mid;
+		else if (a[begin] < a[end])
+			return begin;
+		else
+			return end;
+	}
+	return -1;
+}
 //单趟排序
 int PartSort1(int* arr, int begin,int end)
 {
@@ -138,6 +163,8 @@ int PartSort2(int* arr, int begin, int end)
 //前后指针法
 int PartSort3(int* arr, int begin, int end)
 {
+	int mid = GetMidIndex(arr, begin, end);
+	Swap(&arr[mid], &arr[end]);
 	int prev = begin - 1;
 	int cur = begin;
 	int key = arr[end];
@@ -186,6 +213,7 @@ void QuickSortOP(int* arr, int left, int right)
 //	assert(arr);
 //
 //}
+
 
 //归并排序
 void Merge(int* a, int begin1, int end1, int begin2, int end2, int* tmp)

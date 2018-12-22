@@ -6,7 +6,7 @@ int main()
 	int len = sizeof(arr) / sizeof(arr[0]);
 
 	//InsertSort(arr,len);
-	//SelectSort(arr, len);
+	//SelectSort(arr, len);`
 	//HeapSort(arr, len);
 	//BubbleSort(arr, len);
 	//QuickSort(arr, 0, len - 1);
