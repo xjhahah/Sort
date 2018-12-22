@@ -281,3 +281,33 @@ void MergeSort(int* a, int n)
 	_MergeSort(a, 0, n - 1, tmp);
 	free(tmp);
 }
+
+//¼ÆÊýÅÅÐò
+void CountSort(int* a, int n)
+{
+	assert(a);
+	int max = a[0];
+	int min = a[0];
+	for (int i = 0; i < n; ++i)
+	{
+		if (a[i] > max)
+			max = a[i];
+		if (a[i] < min)
+			min = a[i];
+	}
+	int range = max - min + 1;
+	int* counts = (int*)malloc(range * sizeof(int));
+	memset(counts, 0, sizeof(int)*range);
+	for (int i = 0; i < n; ++i)
+	{
+		counts[a[i - min]]++;
+	}
+	int index = 0;
+	for (int i = 0; i < range; ++i)
+	{
+		while (counts[i]--)
+		{
+			a[index++] = i + min;
+		}
+	}
+}

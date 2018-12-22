@@ -12,7 +12,8 @@ int main()
 	//QuickSort(arr, 0, len - 1);
 	//QuickSortOP(arr, 0, len - 1);
 	//QuickSortNonR(arr, 0, len - 1);
-	MergeSort(arr, len);
+	//MergeSort(arr, len);
+	CountSort(arr, len);
 	Print(arr, len);
 	return 0;
 }
